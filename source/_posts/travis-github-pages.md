@@ -5,7 +5,7 @@ tags:
   - Travis CI
 ---
  
-在hexo／next的基础上，集成Travis CI，当使用`git push`后，将发布博文的工作自动化。
+在hexo／next的基础上，集成Travis CI，当使用`git push`后，将发布博文的工作自动化。test
 
 <!-- more -->
 
