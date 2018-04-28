@@ -1,6 +1,6 @@
 ## 基于Hexo／Next主题／Travis CI，实现自动构建集成发布的博客系统
 
-[![Build Status](https://travis-ci.org/Selvin11/hexo-blog.svg?branch=master)](https://travis-ci.org/Selvin11/hexo-blog)
+[![Build Status](https://travis-ci.org/Selvin11/Selvin11.github.io.svg?branch=master)](https://travis-ci.org/Selvin11/Selvin11.github.io)
 
 
 > 写作
