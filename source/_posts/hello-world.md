@@ -1,7 +1,6 @@
 ---
 title: Hello World
-tags: 
-  - Hello World
+date: 2016-09-20
 ---
 
 ## 关于博客的升级

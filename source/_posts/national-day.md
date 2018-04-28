@@ -1,5 +1,6 @@
 ---
 title: National Day
+date: 2016-10-01
 tags: 
   - Vue.js 2.0
 ---

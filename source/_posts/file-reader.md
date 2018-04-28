@@ -1,5 +1,6 @@
 ---
 title: 获取input上传图片，实现裁剪功能
+date: 2016-10-10
 categories: 常见功能
 tags: 
   - FileReader

@@ -1,5 +1,6 @@
 ---
 title: React Native 开发环境搭建
+date: 2016-11-10
 categories: React Native
 tags: 
   - React Native

@@ -1,5 +1,6 @@
 ---
 title:  "全栈前端热更新，后端服务重启，浏览器自动刷新"
+date: 2017-03-20
 categories: "全栈"
 tags: 
   - Webpack 

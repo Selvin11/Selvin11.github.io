@@ -1,5 +1,6 @@
 ---
 title: DNS之博客搭建中的域名配置
+categories: DNS
 date: 2018-04-25 11:52:31
 tags:
   - DNS

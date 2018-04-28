@@ -1,5 +1,6 @@
 ---
 title:  vuex入门到实践
+date: 2017-03-17
 categories:  Vue
 tags: 
   - vuex

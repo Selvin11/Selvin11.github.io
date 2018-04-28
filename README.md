@@ -53,24 +53,8 @@ git push
 
 3. 集成Travis CI，使用你的Github账号登录Travis CI官网，具体可以参考[持续集成服务 Travis CI 教程](http://www.ruanyifeng.com/blog/2017/12/travis_ci_tutorial.html)
 
-4. 在项目（hexo-blog）根目录下创建.travis.yml文件，进行配置（仅供参考）
+4. `.travis.yml`文件中有详细注释
 
-  ```yaml
-  language: node_js
-  node_js:
-    - 'stable'
-  deploy:
-    provider: pages
-    skip_cleanup: true
-    github_token: $GITHUB_TOKEN # Set in travis-ci.org dashboard
-    local_dir: public # 选择push内容的根目录
-    name: Selvin11 # 发布名称
-    repo: Selvin11/Selvin11.github.io # push到的项目名称
-    target_branch: blog # push到该项目下的分支名称（默认gh-pages）
-    project_name: Blog # Deploy Blog to github.com/Selvin11/Selvin11.github.io.git:blog 构成的commit信息
-    on:
-      branch: master
-  cache:
-    directories:
-    - node_modules # NPM packages
-  ```
+## 参考
+
+* [使用 Travis 自动部署 Hexo 到 Github 与 自己的服务器](https://segmentfault.com/a/1190000009054888)
