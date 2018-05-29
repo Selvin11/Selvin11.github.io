@@ -36,13 +36,13 @@ git push
 1. 本地初始化一个hexo项目`yourgithubname.github.io`
 2. hexo new post // 新建文章
 3. hexo g // 将文章生成静态文件
-4. git push // 将hexo项目push到远端，同时自动将静态文件发布项目的blog分支
+4. git push // 将hexo项目push到远端，同时自动将静态文件发布项目的master分支
 
 ## 方案思路
 
-1. github上有一个存放`yourgithubname.github.io`的hexo项目，master分支存放hexo代码，blog分支存放静态文件
+1. github上有一个存放`yourgithubname.github.io`的hexo项目，source分支存放hexo代码，master分支存放静态文件
 
-2. 在更新master中的文件后，`git push`时通过Travis CI的Continuous Deployment提供的providers，配置push的路径为项目的blog分支
+2. 在更新source中的文件后，`git push`时通过Travis CI的`Continuous Deployment`提供的`providers`，配置push的路径为项目的master分支
 
 
 ## 实现细节
