@@ -1,19 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title><![CDATA[DNS之博客搭建中的域名配置]]></title>
-    <url>%2F2018%2F04%2F25%2Fdns-learn%2F</url>
-    <content type="text"><![CDATA[探索学习域名系统，从域名解析、域名服务器、主机服务器等几个方面拨开云雾。 从输入URL开始 在浏览器客户端中输入我们购买后的域名（www.example.com），点击回车 浏览器会向此电脑的网络接入商（电信）发出域名请求，电信的DNS服务器要查询域名数据库，查找这个域名的DNS服务器，然后从中抓去记录，获取此域名指向的IP地址 电信的服务器向此IP地址所对应的服务器抓取网页内容，然后传输给浏览器 浏览器 =&gt; 电信DNS服务器 =&gt; IP =&gt; 电信服务器 =&gt; IP对应的服务器 =&gt; 浏览器 互联网的传输互联网上的每一台电脑都被分配一个IP地址，数据的传输实际上是在不同IP地址之间进行的。包括我们在家上网时使用的电脑，在连上网以后也被分配一个IP地址，这个IP地址绝大部分情况下是动态的。也就是说你关掉调制解调器，在重新打开上网，你的上网接入商会随机分配一个新的IP地址。 网站服务器（IP对应的服务器、主机服务器）网站服务器本质上也是台连上网的电脑，只不过配置上更适合作为服务器，并且放在数据中心，保持低温，低尘环境，同时有安全保卫。这些服务器使用固定IP地址连入互联网。 一个域名解析到某一台服务器上，并且把网页文件放到这台服务器上，用户的电脑才知道去哪一台服务器获取这个域名的网页信息。这是通过域名服务器来实现的。 域名服务器域名服务器是英文Domain Name Server的缩写。每一个域名都至少要有两个DNS服务器，这样如果其中一个DNS服务器出现问题，另外一个也可以返回关于这个域名的数据。DNS服务器也可以有两个以上，但所有这些DNS服务器上的DNS记录都应该是相同的。 在DNS服务器中保留有该域名的DNS记录，比如A记录，MX记录。A记录是用来指定主机名（或域名）对应的IP地址。MX记录用来解析域名的邮件服务器。在很多情况下。 A记录：地址记录，用来指定域名的IPv4地址（如：8.8.8.8），如果需要将域名指向一个IP地址，就需要添加A记录。 CNAME： 如果需要将域名指向另一个域名，再由另一个域名提供ip地址，就需要添加CNAME记录。 域名解析域名解析需要很长时间，是因为上网接入商，比如北京电信，河南电信等，为了要加速用户打开网页的速度，通常在他们的DNS服务器中缓存了很多域名的DNS记录。这样这个接入商的用户要打开某个网页时，接入商的服务器不需要去查询域名数据库，而是把自己缓存中的DNS记录直接使用，从而加快用户访问网站的速度。 缺点是上网接入商ISP的缓存会存储一段时间，只在需要的时候才更新，而更新的频率没有什么标准。有的ISP可能1小时更新一次，有的可能长达一两天才更新一次。 所以新注册的域名一般来说解析反倒比较快。因为所有的ISP都没有缓存，用户访问时ISP都是要查询域名数据库，得到最新的DNS数据。 而老域名如果更改了DNS记录，但世界各地的ISP缓存数据却并不是立即更新的。这样不同ISP下的不同用户，有的可以比较快的获取新的DNS记录，有的就要等ISP缓存的下一次更新。 说明DNS服务器和网页服务器可以是同一个提供商提供的，也可以是不同的。通常虚拟主机提供商也提供自己的DNS服务器，这样用户只要把自己的域名指向虚拟主机提供商自己的域名服务器就可以了。有的用户喜欢使用域名注册服务商提供的DNS服务器（如GoDaddy），这时候用户就要在域名注册商的DNS服务器中更改DNS记录，如A，MX记录等到虚拟主机提供商的IP地址。 基于Github Page的个人博客搭建中域名配置解析 在域名注册服务商（GoDaddy）处购买域名（www.example.com） 不使用它提供的域名服务器，使用Dnspod（国内免费DNS服务器，提供域名解析及域名记录等服务），因此需要在GoDaddy上添加Dnspod的域名服务器f1g1ns1.dnspod.net以及f1g1ns2.dnspod.net 根据github page提供的IP（192.30.252.153、192.30.252.154），在Dnspod中添加两条A记录 在Dnspod中添加一条CNAME记录，记录即为你的github page域名（yourgithubname.github.io） 在github page项目中添加CNAME文件（内容为购买的域名www.example.com） 延伸问题：为什么配置了域名解析还要配置CNAME文件呢？ 实际上，个人域名是名字，github page相当于网站空间。试想，如果不在网站空间配置CNAME，就可以成功绑定域名，那么岂不是可以给别随便一个的网站绑定上自己的域名？相同，如果只需配置github pages的CNAME，而不用域名解析，那不是也可以将自己的网站绑在人和别人的域名上？所以，域名绑定是需要“双方同意”的。 综上所述，本质上时github page提供了一个网站服务器及域名（yourgithubname.github.io），我们需要将自己购买的域名代理到github page下即可 基于自有服务器的个人博客搭建中域名配置解析同上，需要用自有服务器的IP替换github page的IP，添加A记录，以及将CNAME改为你的域名即可，相当于绕过github page提供的网站域名（yourgithubname.github.io），直接绑定自有服务器以及自有域名。 参考什么是域名解析？什么是域名服务器？]]></content>
+    <title><![CDATA[Redux 流程图]]></title>
+    <url>%2F2019%2F04%2F14%2Fredux%2F</url>
+    <content type="text"><![CDATA[梳理action经由dispatch到middleware到reducer，最后更新state以及视图的过程。]]></content>
+      <categories>
+        <category>Redux</category>
+      </categories>
       <tags>
-        <tag>DNS</tag>
+        <tag>Redux</tag>
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[搭建基于Travis CI自动化部署的hexo／next主题博客]]></title>
-    <url>%2F2017%2F08%2F03%2Ftravis-github-pages%2F</url>
-    <content type="text"><![CDATA[在hexo／next的基础上，集成Travis CI，当使用git push后，将发布博文的工作自动化。test hexo基本流程 本地初始化一个hexo项目 hexo new post // 新建文章 hexo g -d // 将文章生成静态文件并发布到博客项目（xxx.github.io） 产生的痛点误删本地项目／换电脑／更新系统，都会导致本地项目丢失，当然也可以存U盘／云盘等，但直接放在Github上保存比较直观，所以我的理想流程是： 本地初始化一个hexo项目 hexo new post // 新建文章 hexo g // 将文章生成静态文件 git push // 将hexo项目push到远端，同时自动将静态文件发布到博客项目（xxx.github.io） 方案思路 github上有一个存放hexo blog的项目，以及一个存放博客文章的静态资源项目（xxx.github.io） 在更新hexo blog中的文件后，git push时通过Travis CI的Continuous Deployment提供的providers，配置push的路径为项目（xxx.github.io），以及目录分支等参数 实现细节 参照hexo官方网站和next官方网站，生成项目（hexo-blog） 直接在Github中创建一个（xxx.github.io）空项目 项目（hexo-blog）集成Travis CI，使用你的Github账号登录Travis CI官网，具体可以参考持续集成服务 Travis CI 教程 在项目（hexo-blog）根目录下创建.travis.yml文件，进行配置（仅供参考） 1234567891011121314151617language: node_jsnode_js: - 'stable'deploy: provider: pages skip_cleanup: true github_token: $GITHUB_TOKEN # Set in travis-ci.org dashboard local_dir: public # 选择push内容的根目录 name: Selvin11 # 发布名称 repo: Selvin11/selvin11.github.io # push到的项目名称 target_branch: master # push到该项目下的分支名称（默认gh-pages） project_name: Blog # Deploy Blog to github.com/Selvin11/selvin11.github.io.git:master 构成的commit信息 on: branch: mastercache: directories: - node_modules # NPM packages]]></content>
+    <title><![CDATA[DNS之博客搭建中的域名配置]]></title>
+    <url>%2F2018%2F04%2F25%2Fdns-learn%2F</url>
+    <content type="text"><![CDATA[探索学习域名系统，从域名解析、域名服务器、主机服务器等几个方面拨开云雾。 从输入URL开始 在浏览器客户端中输入我们购买后的域名（www.example.com），点击回车 浏览器会向此电脑的网络接入商（电信）发出域名请求，电信的DNS服务器要查询域名数据库，查找这个域名的DNS服务器，然后从中抓去记录，获取此域名指向的IP地址 电信的服务器向此IP地址所对应的服务器抓取网页内容，然后传输给浏览器 浏览器 =&gt; 电信DNS服务器 =&gt; IP =&gt; 电信服务器 =&gt; IP对应的服务器 =&gt; 浏览器 互联网的传输互联网上的每一台电脑都被分配一个IP地址，数据的传输实际上是在不同IP地址之间进行的。包括我们在家上网时使用的电脑，在连上网以后也被分配一个IP地址，这个IP地址绝大部分情况下是动态的。也就是说你关掉调制解调器，在重新打开上网，你的上网接入商会随机分配一个新的IP地址。 网站服务器（IP对应的服务器、主机服务器）网站服务器本质上也是台连上网的电脑，只不过配置上更适合作为服务器，并且放在数据中心，保持低温，低尘环境，同时有安全保卫。这些服务器使用固定IP地址连入互联网。 一个域名解析到某一台服务器上，并且把网页文件放到这台服务器上，用户的电脑才知道去哪一台服务器获取这个域名的网页信息。这是通过域名服务器来实现的。 域名服务器域名服务器是英文Domain Name Server的缩写。每一个域名都至少要有两个DNS服务器，这样如果其中一个DNS服务器出现问题，另外一个也可以返回关于这个域名的数据。DNS服务器也可以有两个以上，但所有这些DNS服务器上的DNS记录都应该是相同的。 在DNS服务器中保留有该域名的DNS记录，比如A记录，MX记录。A记录是用来指定主机名（或域名）对应的IP地址。MX记录用来解析域名的邮件服务器。在很多情况下。 A记录：地址记录，用来指定域名的IPv4地址（如：8.8.8.8），如果需要将域名指向一个IP地址，就需要添加A记录。 CNAME： 如果需要将域名指向另一个域名，再由另一个域名提供ip地址，就需要添加CNAME记录。 域名解析域名解析需要很长时间，是因为上网接入商，比如北京电信，河南电信等，为了要加速用户打开网页的速度，通常在他们的DNS服务器中缓存了很多域名的DNS记录。这样这个接入商的用户要打开某个网页时，接入商的服务器不需要去查询域名数据库，而是把自己缓存中的DNS记录直接使用，从而加快用户访问网站的速度。 缺点是上网接入商ISP的缓存会存储一段时间，只在需要的时候才更新，而更新的频率没有什么标准。有的ISP可能1小时更新一次，有的可能长达一两天才更新一次。 所以新注册的域名一般来说解析反倒比较快。因为所有的ISP都没有缓存，用户访问时ISP都是要查询域名数据库，得到最新的DNS数据。 而老域名如果更改了DNS记录，但世界各地的ISP缓存数据却并不是立即更新的。这样不同ISP下的不同用户，有的可以比较快的获取新的DNS记录，有的就要等ISP缓存的下一次更新。 说明DNS服务器和网页服务器可以是同一个提供商提供的，也可以是不同的。通常虚拟主机提供商也提供自己的DNS服务器，这样用户只要把自己的域名指向虚拟主机提供商自己的域名服务器就可以了。有的用户喜欢使用域名注册服务商提供的DNS服务器（如GoDaddy），这时候用户就要在域名注册商的DNS服务器中更改DNS记录，如A，MX记录等到虚拟主机提供商的IP地址。 基于Github Page的个人博客搭建中域名配置解析 在域名注册服务商（GoDaddy）处购买域名（www.example.com） 不使用它提供的域名服务器，使用Dnspod（国内免费DNS服务器，提供域名解析及域名记录等服务），因此需要在GoDaddy上添加Dnspod的域名服务器f1g1ns1.dnspod.net以及f1g1ns2.dnspod.net 根据github page提供的IP（192.30.252.153、192.30.252.154），在Dnspod中添加两条A记录 在Dnspod中添加一条CNAME记录，记录即为你的github page域名（yourgithubname.github.io） 在github page项目中添加CNAME文件（内容为购买的域名www.example.com） 延伸问题：为什么配置了域名解析还要配置CNAME文件呢？ 实际上，个人域名是名字，github page相当于网站空间。试想，如果不在网站空间配置CNAME，就可以成功绑定域名，那么岂不是可以给别随便一个的网站绑定上自己的域名？相同，如果只需配置github pages的CNAME，而不用域名解析，那不是也可以将自己的网站绑在人和别人的域名上？所以，域名绑定是需要“双方同意”的。 综上所述，本质上时github page提供了一个网站服务器及域名（yourgithubname.github.io），我们需要将自己购买的域名代理到github page下即可 基于自有服务器的个人博客搭建中域名配置解析同上，需要用自有服务器的IP替换github page的IP，添加A记录，以及将CNAME改为你的域名即可，相当于绕过github page提供的网站域名（yourgithubname.github.io），直接绑定自有服务器以及自有域名。 参考什么是域名解析？什么是域名服务器？]]></content>
+      <categories>
+        <category>DNS</category>
+      </categories>
       <tags>
-        <tag>Travis CI</tag>
+        <tag>DNS</tag>
       </tags>
   </entry>
   <entry>
@@ -53,84 +59,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[React Native 开发预备知识]]></title>
-    <url>%2F2016%2F12%2F03%2FReact-Native-oc%2F</url>
-    <content type="text"><![CDATA[OC原生开发，基于C语言，增加了面向对象的编程模式，有类、继承、多态等属性。 .h源文件 =&gt; .m实现文件 引用相应的.h库文件，调用其中的各项类及函数 实例化调用的类，设置其属性及方法 12344/4s 3.5寸 320*480 @2x 5/5s 4.0寸 320*568 @2x6/7 4.7寸 375*667 @2x 图片分辨率 750*13446p/7p 5.5寸 414*736 @3x 图片分辨率 1224*2208]]></content>
-      <categories>
-        <category>React Native</category>
-      </categories>
-      <tags>
-        <tag>React Native</tag>
-        <tag>Object-C</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[React Native 开发环境搭建]]></title>
-    <url>%2F2016%2F11%2F30%2Freact-native%2F</url>
-    <content type="text"><![CDATA[分别实践了Windows/OSX上的Android运行环境，以及OSX上的IOS运行环境，记录下了其中的坑洼。 Windows 搭建Android运行环境 首先安装Java，直接在官方网站下载最新版本即可（1.8以上） 接下来，安装Python2、Node.js 使用npm全局安装react native cli 和 yarn(增加包管理下载速度) 下载Android Studio（安卓运行sdk以及安卓虚拟机），根据教程将所有必须项安装 点击SDK Manager中的Launch Standalone SDK Manager，找到ADV Manager，打开一个android虚拟机，没有的话就创建一个即可 react-native run-android 执行react-native run-android命令后出现的问题 post占用，使用命令行查找使用该端口的进程，并杀掉即可 安卓虚拟机创建，点击Android SDK，点击Launch Standalone SDK Manager，进入AVD Tools进行创建 下载Gradle过程出现中断，根据下载路径，用浏览器打开进行离线下载安装，下载之后放置与/users/username/.gradle/wrapper/dists/目录下 出现Java文件未能执行的问题，配置JAVA_HOME环境变量 OSX 配置 Android环境 基本同上，遇到下载Gradle中断问题，离线下载至~/.gradle/wrapper/dists 分析各项安装包的作用 Android Studio（包含了运行和测试React Native应用所需的Android SDK和模拟器） JDK(JAVA环境，Android Studio运行必备) Android SDK(android运行必备,提供android各版本支持)Google APIs、Android SDK Platform 23` Intel x86 Atom System Image、Intel x86 Atom_64 System Image以及Google APIs Intel x86 Atom_64 System Image`以上几个是虚拟机内置环境 Android SDK Build-Tools 23.0.1（必须是这个版本）与Android SDK Platform 23对应 因此方案二：使用性能更好的Genymotion模拟器，放弃Android Studio自带模拟器 注册Genymotion账号，下载Genymotion和VirtualBox，下载一个版本的机型即可，下载中断问题，同样找到下载路径，进行离线下载，放置于路径/Users/username/.Genymobile/Genymotion/ova/即~/.Genymobile/Genymotion/ova/(Windows/OSX操作步骤一直) 因此关于Android Studio下载的必须项目即Google APIs、Android SDK Platform 23、Android SDK Build-Tools 23.0.1这三个即可，而且在安装界面也可以不勾选内置模拟器Android Virtual Device 方案二同比方案一安装完全减少10G作用的容量=。= 环境搭建至此。]]></content>
-      <categories>
-        <category>React Native</category>
-      </categories>
-      <tags>
-        <tag>React Native</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[React学习之基础篇（五）———— 条件、列表循环]]></title>
-    <url>%2F2016%2F11%2F22%2FReact-Rendering-Lists%2F</url>
-    <content type="text"><![CDATA[条件渲染 同原生JS一致，采用条件语句进行判断并渲染DOM。 条件通过setState()来进行更新，从而产生判断内容，然后根据UI上的数据来执行渲染过程。 简化判断语句 true &amp;&amp; expression condition ? true : false 阻止组件渲染 符合条件时return null(条件判断放在render()之前) 列表和键 主要通过map()方法来遍历数组，并为每一个列增加key即id，以便区分 123456789101112131415161718//simple examplefunction NumberList(props) &#123; //定义数组常量 const numbers = props.numbers; //定义遍历列表常量 const listItems = numbers.map((number) =&gt; &lt;li key=&#123;number.toString()&#125;&gt;&#123;number&#125;&lt;/li&gt; ); return ( &lt;ul&gt;&#123;listItems&#125;&lt;/ul&gt; );&#125;const numbers = [1, 2, 3, 4, 5];ReactDOM.render( &lt;NumberList numbers=&#123;numbers&#125; /&gt;, document.getElementById('root')) key一般只需在相邻的list中保持自己的唯一性，不用在全局中保持唯一，这样通过不同的数据遍历出来的内容，可以根据相同的key，在同一数组中传递，例如遍历文章，文章中的标题、时间等都是一一对应的，配合mongodb写博客系统更是酸爽。 123456789101112131415161718192021222324252627282930313233function Blog(props) &#123; const sidebar = ( &lt;ul&gt; &#123;props.posts.map((post) =&gt; &lt;li key=&#123;post.id&#125;&gt; &#123;post.title&#125; &lt;/li&gt; )&#125; &lt;/ul&gt; ); const content = props.posts.map((post) =&gt; &lt;div key=&#123;post.id&#125;&gt; &lt;h3&gt;&#123;post.title&#125;&lt;/h3&gt; &lt;p&gt;&#123;post.content&#125;&lt;/p&gt; &lt;/div&gt; ); return ( &lt;div&gt; &#123;sidebar&#125; &lt;hr /&gt; &#123;content&#125; &lt;/div&gt; );&#125;const posts = [ &#123;id: 1, title: 'Hello World', content: 'Welcome to learning React!'&#125;, &#123;id: 2, title: 'Installation', content: 'You can install React from npm.'&#125;];ReactDOM.render( &lt;Blog posts=&#123;posts&#125; /&gt;, document.getElementById('root')); React 中的表单 在原生HTML中，表单元素自身拥有状态以及更新状态的能力，但在React中，状态存在于组件中，状态的改变只能通过setState()函数进行改变，因此也称为控制组件。]]></content>
-      <categories>
-        <category>React</category>
-      </categories>
-      <tags>
-        <tag>React</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[React学习之基础篇（四）———— 事件机制]]></title>
-    <url>%2F2016%2F11%2F21%2Freact-event%2F</url>
-    <content type="text"><![CDATA[学习React中的事件机制，理解语法及本质。 React 处理事件的不同之处 事件采用驼峰命名 123&lt;button onClick=&#123;activateLasers&#125;&gt; Activate Lasers&lt;/button&gt; 无法直接使用return false;组织事件默认行为 123456789101112function ActionLink() &#123; function handleClick(e) &#123; e.preventDefault(); console.log('The link was clicked.'); &#125; return ( &lt;a href="#" onClick=&#123;handleClick&#125;&gt; Click me &lt;/a&gt; );&#125; React 中的事件都是虚拟的，但兼容性是大大的，不必使用addEventListner进行事件监听，相反，只需在初始渲染时提供一个listener即可。当使用ES6 class，进行组件定义时，可以采用handler event的方法，届时调用即可 1234567891011121314151617181920212223242526272829303132class Toggle extends React.Component &#123; constructor(props) &#123; // 继承父级this及其属性(状态)，否则会报错 super(props); //Toggle 私有状态 this.state = &#123;isToggleOn: true&#125;; // This binding is necessary to make `this` work in the callback // es6 class 方法默认不会自动绑定this this.handleClick = this.handleClick.bind(this); &#125; handleClick() &#123; this.setState(prevState =&gt; (&#123; // prevState 存储着前一个时刻的状态 isToggleOn: !prevState.isToggleOn &#125;)); &#125; render() &#123; return ( &lt;button onClick=&#123;this.handleClick&#125;&gt; &#123;this.state.isToggleOn ? 'ON' : 'OFF'&#125; &lt;/button&gt; ); &#125;&#125;ReactDOM.render( &lt;Toggle /&gt;, document.getElementById('root'));]]></content>
-      <categories>
-        <category>React</category>
-      </categories>
-      <tags>
-        <tag>React</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[React学习之基础篇（三）———— 状态和生命周期]]></title>
-    <url>%2F2016%2F11%2F21%2FState-Lifesycle%2F</url>
-    <content type="text"><![CDATA[来学一学React的状态和生命周期 简单的示例： 12345678910111213141516171819202122232425262728293031323334353637class Clock extends React.Component &#123; constructor(props) &#123; super(props); this.state = &#123;date: new Date()&#125;; &#125; componentDidMount() &#123; this.timerID = setInterval( () =&gt; this.tick(), 1000 ); &#125; componentWillUnmount() &#123; clearInterval(this.timerID); &#125; tick() &#123; this.setState(&#123; date: new Date() &#125;); &#125; render() &#123; return ( &lt;div&gt; &lt;h1&gt;Hello, world!&lt;/h1&gt; &lt;h2&gt;It is &#123;this.state.date.toLocaleTimeString()&#125;.&lt;/h2&gt; &lt;/div&gt; ); &#125;&#125;ReactDOM.render( &lt;Clock /&gt;, document.getElementById('root')); attention state update the way of setState() 直接使用 this.setState({comment: &#39;Hello&#39;});; 当同一个组件内部更新this.state和this.props时为异步的情况，采用如下方法进行状态更新 12345// Correctthis.setState((prevState, props) =&gt; (&#123; counter: prevState.counter + props.increment&#125;));//prevState 保存的是之前状态的值，然后作为参数传递 component state 只能影响下级的组件，同一层级相同的组件之间是独立的，不会互相影响]]></content>
-      <categories>
-        <category>React</category>
-      </categories>
-      <tags>
-        <tag>React</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[React学习之基础篇（二）————组件]]></title>
-    <url>%2F2016%2F11%2F19%2FReact-Component%2F</url>
-    <content type="text"><![CDATA[学习React组件，从创建，使用，拆分，构建，理解组件化的思维，以及对于组件构建的一些理解，就像造轮子和使用轮子，充斥着哲学味道。 React Component 组件的本质 组件本质就是一个对象。 创建一个组件 12345678910// 原生函数创建function Welcome(props) &#123; return &lt;h1&gt;Hello,&#123;props.name&#125;&lt;/h1&gt;&#125;// 使用es6中的类，继承来创建class Welcome extends React.Component &#123; render() &#123; return &lt;h1&gt;Hello,&#123;this.props.name&#125;&lt;/h1&gt; &#125;&#125; 使用组件 12345const element = &lt;Welcome name="selvin" /&gt;;ReactDOM.render(element,document.getElementById("root")); 组件唯一的根元素 注意：Component返回值必须单一的根元素，即只有一个最外包裹节点，因此加入了空的&lt;div&gt; 123456789101112131415function App() &#123; return ( &lt;div&gt; &lt;Welcome name="selvin"/&gt; &lt;Welcome name="selvin"/&gt; &lt;Welcome name="selvin"/&gt; &lt;Welcome name="selvin"/&gt; &lt;/div&gt; )&#125; // use itReactDOM.render( &lt;App/&gt;, document.getElementById("root")); 构建组件 注意：一个React app一般只有一个组件在最外层，但如果你是向已经存在的app中添加组件，则是由最底层的节点，例如一个按钮button，一步步向最外层进行组件开发，直至这个组件成为最外层节点。 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657function Comment(props) &#123; return ( &lt;div className="Comment"&gt; &lt;div className="UserInfo"&gt; &lt;img className="Avatar" src=&#123;props.author.avatarUrl&#125; alt=&#123;props.author.name&#125; /&gt; &lt;div className="UserInfo-name"&gt; &#123;props.author.name&#125; &lt;/div&gt; &lt;/div&gt; &lt;div className="Comment-text"&gt; &#123;props.text&#125; &lt;/div&gt; &lt;div className="Comment-date"&gt; &#123;formatDate(props.date)&#125; &lt;/div&gt; &lt;/div&gt; );&#125; // this component accepts three object . author / text / date // first extract author function Avatar(props) &#123; return ( &lt;img className="Avatar" src=&#123;props.user.avatarUrl&#125; alt=&#123;props.user.name&#125; /&gt; );&#125; // second extract user function UserInfo(props) &#123; return ( &lt;div className="UserInfo"&gt; &lt;Avatar user=&#123;props.user&#125; /&gt; &lt;div className="UserInfo-name"&gt; &#123;props.user.name&#125; &lt;/div&gt; &lt;/div&gt; );&#125; // finally function Comment(props) &#123; return ( &lt;div className="Comment"&gt; &lt;UserInfo user=&#123;props.author&#125; /&gt; &lt;div className="Comment-text"&gt; &#123;props.text&#125; &lt;/div&gt; &lt;div className="Comment-date"&gt; &#123;formatDate(props.date)&#125; &lt;/div&gt; &lt;/div&gt; );&#125; props只有一个根节点，只读。 React 组件核心思想 重构和继承，面对一个UI Component，我们可以对其进行近可能的拆分，从而导致我们最终可能会有成百上千个组件，面对新的组件开发，我们是采用重新构建还是继承呢，这里就是理解React组件化的核心思想了。构建是最具可塑性的组件化方式，它十分的弹性，我们只需根据现有的可用的组件完成基本结构的搭建，然后通过特殊标签props.children或者自定义的子组件并重新定义，就可以构建出任何你所需的组件了，因此大多数情况下采用构建就够了。]]></content>
-      <categories>
-        <category>React</category>
-      </categories>
-      <tags>
-        <tag>React</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[React学习之基础篇（一）]]></title>
-    <url>%2F2016%2F11%2F17%2FReact%2F</url>
-    <content type="text"><![CDATA[学习React基于ES6的基本写法。 第一章 123456789101112131415161718192021222324//虚拟DOM &amp;&amp; 真实DOMReactDOM.render(virtual dom , real dom);//组件语法//组件内部通过this.props对象获取参数class MyTitle extends React.Component &#123; constructor(...args) &#123; super(...args); this.state = &#123; text: 'World' &#125;; &#125; handleClick() &#123; this.setState(&#123; text: 'Clicked' &#125;); &#125; render() &#123; return &lt;h1 onClick=&#123;this.handleClick.bind(this)&#125;&gt; &#123;'Hello ' + this.state.text&#125; &lt;/h1&gt;; &#125; &#125;;]]></content>
-      <categories>
-        <category>React</category>
-      </categories>
-      <tags>
-        <tag>React</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[Git常用命令]]></title>
     <url>%2F2016%2F11%2F16%2Fgit%2F</url>
     <content type="text"><![CDATA[Git常用命令，以备不时之需。 git 常用命令 初始化Git仓库：git init 将文件（新添加的或者修改的）添加进暂存区：git add file 查看被修改的文件状态：git status 将暂存区的文件提交到最终的分支仓库中：git commit -m &quot;修改内容&quot; 查看文件的不同之处：git diff 查看提交的历史纪录：git log 查看所有的历史纪录：git reflog 返回历史版本（回退）：git reset 返回文件修改之前的状态：git checkout - -file 建立与Github的远程仓库连接：git remote add origin git@github.com:Selvin11/.. 关联本地和远程的仓库内容：git push -u origin master clone远程仓库内容到本地：git clone git@github.com:Selvin11/.. 创建新的分支并切换到该分支：git checkout -b gh-pages这其实是两个步骤，首先创建分支：git branch gh-pages,然后是进入该分支：git checkout gh-pages 合并新分支到master分支上：git merge gh-pages,默认Fast forward模式,但此模式会将分支信息丢掉，一般使用git merge --no-ff -m &quot;merge with no-ff&quot; gh-pages,表示禁用Fast forward模式 删除分支：git branch -d gh-pages 解决冲突，当不同分支提交相同文件时，但是内容不同，就会造成commit提交失败，此时需要手动解决，将两处内容重新整合成一样的，然后add,commit,用git log --graph命令可以看到分支合并图。 Bug分支，面对突如其来的Bug，不要慌，我们可以暂时隐藏工作区，创建Bug分支，解决之后，合并后并删除，接下来将隐藏的现实出来就行了：git stash隐藏，git stash list可以查看隐藏内容列表，然后采用git stash pop来恢复隐藏的工作区，恢复的同时也将stash删除了。 对于已经commit的分支，但未push，我们需要删除它，怎么办：git branch -D filename,采用强制删除分支命令 查看远程库内容：git remote,详细内容git remote -v,推送分支内容：git push origin &lt;name&gt;,origin是当初建立连接时为远程库起的名字，抓取分支,从Github上clone下来的项目只有master分支，其他分支需要抓取：git checkout -b gh-pages origin/gh-pages 多人协作： 查看远程库信息，使用git remote -v；本地新建的分支如果不推送到远程，对其他人就是不可见的； 从本地推送分支，使用git push origin branch-name，如果推送失败，先用git pull抓取远程的新提交； 在本地创建和远程分支对应的分支，使用git checkout -b branch-name origin/branch-name，本地和远程分支的名称最好一致； 建立本地分支和远程分支的关联，使用git branch --set-upstream branch-name origin/branch-name； 从远程抓取分支，使用git pull，如果有冲突，要先处理冲突。 zsh mkdir filename 创建目录 touch index.js 创建文件 rm index.js 删除文件 rm -r filename 删除目录]]></content>
@@ -139,6 +67,17 @@
       </categories>
       <tags>
         <tag>Git</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[React Native 开发环境搭建]]></title>
+    <url>%2F2016%2F11%2F10%2Freact-native%2F</url>
+    <content type="text"><![CDATA[分别实践了Windows/OSX上的Android运行环境，以及OSX上的IOS运行环境，记录下了其中的坑洼。 Windows 搭建Android运行环境 首先安装Java，直接在官方网站下载最新版本即可（1.8以上） 接下来，安装Python2、Node.js 使用npm全局安装react native cli 和 yarn(增加包管理下载速度) 下载Android Studio（安卓运行sdk以及安卓虚拟机），根据教程将所有必须项安装 点击SDK Manager中的Launch Standalone SDK Manager，找到ADV Manager，打开一个android虚拟机，没有的话就创建一个即可 react-native run-android 执行react-native run-android命令后出现的问题 post占用，使用命令行查找使用该端口的进程，并杀掉即可 安卓虚拟机创建，点击Android SDK，点击Launch Standalone SDK Manager，进入AVD Tools进行创建 下载Gradle过程出现中断，根据下载路径，用浏览器打开进行离线下载安装，下载之后放置与/users/username/.gradle/wrapper/dists/目录下 出现Java文件未能执行的问题，配置JAVA_HOME环境变量 OSX 配置 Android环境 基本同上，遇到下载Gradle中断问题，离线下载至~/.gradle/wrapper/dists 分析各项安装包的作用 Android Studio（包含了运行和测试React Native应用所需的Android SDK和模拟器） JDK(JAVA环境，Android Studio运行必备) Android SDK(android运行必备,提供android各版本支持)Google APIs、Android SDK Platform 23` Intel x86 Atom System Image、Intel x86 Atom_64 System Image以及Google APIs Intel x86 Atom_64 System Image`以上几个是虚拟机内置环境 Android SDK Build-Tools 23.0.1（必须是这个版本）与Android SDK Platform 23对应 因此方案二：使用性能更好的Genymotion模拟器，放弃Android Studio自带模拟器 注册Genymotion账号，下载Genymotion和VirtualBox，下载一个版本的机型即可，下载中断问题，同样找到下载路径，进行离线下载，放置于路径/Users/username/.Genymobile/Genymotion/ova/即~/.Genymobile/Genymotion/ova/(Windows/OSX操作步骤一直) 因此关于Android Studio下载的必须项目即Google APIs、Android SDK Platform 23、Android SDK Build-Tools 23.0.1这三个即可，而且在安装界面也可以不勾选内置模拟器Android Virtual Device 方案二同比方案一安装完全减少10G作用的容量=。= 环境搭建至此。]]></content>
+      <categories>
+        <category>React Native</category>
+      </categories>
+      <tags>
+        <tag>React Native</tag>
       </tags>
   </entry>
   <entry>
@@ -172,47 +111,9 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[分享几款优质图片插件]]></title>
-    <url>%2F2016%2F09%2F30%2Fwaterfall-gallery%2F</url>
-    <content type="text"><![CDATA[Gallery jQuery plugins —- fancyWaterfall jQuery plugins —- Wookmark-jQuery]]></content>
-      <categories>
-        <category>jQuery</category>
-      </categories>
-      <tags>
-        <tag>jQuery</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[基于Gulp的babel自编译任务流]]></title>
-    <url>%2F2016%2F09%2F26%2Fgulp-babel%2F</url>
-    <content type="text"><![CDATA[Package.json123456"devDependencies": &#123; "babel-core": "^6.14.0", "babel-preset-es2015": "^6.14.0", "gulp": "^3.9.1", "gulp-babel": "^6.1.2"&#125; gulpfile.babel.js12345678910111213141516171819202122'use strict';import gulp from 'gulp';import babel from 'gulp-babel';const paths = &#123; src: 'src', dest: 'lib'&#125;;gulp.task('babel-js',()=&gt;&#123; return gulp.src(`$&#123;paths.src&#125;/*.js`) .pipe(babel(&#123; presets:['es2015'] &#125;)) .pipe(gulp.dest(`$&#123;paths.dest&#125;/`));&#125;)gulp.task('watch',()=&gt;&#123; gulp.watch('./src/*.js',['babel-js']);&#125;)]]></content>
-      <categories>
-        <category>Gulp</category>
-      </categories>
-      <tags>
-        <tag>Gulp</tag>
-        <tag>Babel</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[基于Gulp的Compass任务流]]></title>
-    <url>%2F2016%2F09%2F22%2Fgulp-compass%2F</url>
-    <content type="text"><![CDATA[Package.json1234567"devDependencies": &#123; "browser-sync": "^2.16.0", "gulp": "^3.9.1", "gulp-compass": "^2.1.0", "gulp-notify": "^2.2.0", "gulp-plumber": "^1.1.0" &#125; Gulpfile.js123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051// Load pluginsvar gulp = require('gulp'), compass = require('gulp-compass'), // gulp弹窗任务完成提醒 notify = require('gulp-notify'), // 解决编译中断进程 plumber = require('gulp-plumber'), browserSync = require('browser-sync').create();// Stylesgulp.task('compass', function() &#123; return gulp.src('./sass/*.scss') //输出编译错误 .pipe(plumber(&#123;errorHandler: notify.onError('Error: &lt;%= error.message %&gt;')&#125;)) // 编译 .pipe(compass(&#123; config_file: './config.rb', sourcemap: true, css: 'stylesheets',//compass 输出路径 sass: 'sass'//sass 来源路径 &#125;)) .pipe(browserSync.reload(&#123;stream:true&#125;))//触发自刷新 .pipe(notify(&#123; message: 'compass task complete' &#125;)); &#125;);//html自刷新gulp.task('html', function() &#123; return gulp.src('*.html') .pipe(browserSync.reload(&#123;stream:true&#125;));&#125;);// Watchgulp.task('watch', function() &#123; // browserSync 配置 browserSync.init(&#123; server: &#123; baseDir: "./" &#125; &#125;); // Watch .scss files gulp.watch('./sass/*.scss', ['compass']); gulp.watch( '*.html', ['html']); // Watch *.* files -&gt; reflash gulp.watch(['*/**/*.*']).on('change', browserSync.reload);&#125;);]]></content>
-      <categories>
-        <category>Gulp</category>
-      </categories>
-      <tags>
-        <tag>Gulp</tag>
-        <tag>Compass</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[Hello World]]></title>
     <url>%2F2016%2F09%2F20%2Fhello-world%2F</url>
     <content type="text"><![CDATA[关于博客的升级在初学前端之际，采用Jekyll创建了人生的第一个博客，但当时技术有限，学习任务紧，没有很好的进行设计和性能优化，如今也开始了实习阶段，想将自己的点滴成长记录在于一个能够看得过去的博客之上，因此就有了此次博客的升级。 前端学习路漫漫其修远兮，不巧，在今天微信小程序也炸开了锅，在前端前景如此看好的环境下，不由得促使我更加认真努力的踏上学习之路，再次与内心世界的我一起约定，每天一进步！]]></content>
-      <tags>
-        <tag>Hello World</tag>
-      </tags>
   </entry>
   <entry>
     <title><![CDATA[Node.js + express + jade开发指南实例]]></title>
