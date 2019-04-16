@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="vuex," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="vuex一探到底，vuex是为了解决什么而存在的？究竟何时需要用到它？应该如何使用？伴随这三个问题，逐步深入。">
+<meta name="keywords" content="vuex">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vuex入门到实践">
+<meta property="og:url" content="http://yoursite.com/2017/03/17/vuex-about/index.html">
+<meta property="og:site_name" content="Selvin Blog">
+<meta property="og:description" content="vuex一探到底，vuex是为了解决什么而存在的？究竟何时需要用到它？应该如何使用？伴随这三个问题，逐步深入。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-04-16T11:41:13.575Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="vuex入门到实践">
+<meta name="twitter:description" content="vuex一探到底，vuex是为了解决什么而存在的？究竟何时需要用到它？应该如何使用？伴随这三个问题，逐步深入。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/03/17/vuex-about/"/>
+
+
+
+
+
+  <title>vuex入门到实践 | Selvin Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Selvin Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">Look For My Code World!</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/17/vuex-about/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Selvin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/dog.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Selvin Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">vuex入门到实践</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-17T00:00:00+00:00">
+                2017-03-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Vue/" itemprop="url" rel="index">
+                    <span itemprop="name">Vue</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/03/17/vuex-about/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/03/17/vuex-about/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2017/03/17/vuex-about/" class="leancloud_visitors" data-flag-title="vuex入门到实践">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>vuex一探到底，vuex是为了解决什么而存在的？究竟何时需要用到它？应该如何使用？伴随这三个问题，逐步深入。</p>
+<a id="more"></a>
+<h3 id="vuex解决了什么"><a href="#vuex解决了什么" class="headerlink" title="vuex解决了什么?"></a>vuex解决了什么?</h3><p>在使用<code>Vue</code>开发web应用程序时，每个组件如果都有各自的状态，而且这些状态之间是有关联，这时仅靠<code>Vue</code>是无法合理的管理这些状态的，会导致状态和代码难以维护。</p>
+<p>因此vuex诞生了，说简单点，它充当了所有组件的容器，并为各个组件提供了调用状态，改变状态的接口。</p>
+<h3 id="何时需要用到它？"><a href="#何时需要用到它？" class="headerlink" title="何时需要用到它？"></a>何时需要用到它？</h3><p>一般都会说，就像眼镜，你自然知道什么时候使用。</p>
+<p>但这句话不免太过程序员语气，通俗来讲，当你的应用组件之间共用的状态出现较多时，这时vuex能够以它提供的规则，会避免你的代码和逻辑混乱，如果只有一两个共有的，可以用<code>global event bus</code>方案解决，本质是生成一个独立的<code>vue</code>实例，将共有的状态以及改变状态的方法挂载在上面，让你组件中使用的<code>vue</code>实例进行调用。</p>
+<h3 id="vuex该如何使用？"><a href="#vuex该如何使用？" class="headerlink" title="vuex该如何使用？"></a>vuex该如何使用？</h3><p>上述两个问题的答案，可以看出最重要的是要理解vuex状态管理的模式，理解它提供的接口</p>
+<ol>
+<li><p>vuex状态管理的模式：</p>
+<p>先来看看vue状态管理模式：单向数据流，状态（state）为视图（view）的数据源，操作（actions）可以改变状态，从而改变了视图。</p>
+<p><code>view -&gt; actions -&gt; state -&gt;view ...</code></p>
+<p>但涉及多个组件之间的状态共享时，这个模式将难以维护，因此vuex的状态管理模式改为：</p>
+<p><code>vuex -&gt; actions -&gt; 提交（commit）mutations -&gt;state -&gt; view -&gt; dispatch 触发 actions -&gt;...</code></p>
+<p>vuex集中管理组件的状态，组件dispatch actions，然后actions才能提交改变状态的方法，状态改变了，视图也就更新了</p>
+<p><strong>应用中的状态不是所有都要放入vuex中，将组件之间共享的状态放入即可，像单个组件自己的状态，继续使用局部状态，避免vuex中的代码冗余</strong></p>
+</li>
+<li><p>vuex提供的接口 (实例代码为vue单文件组件)​</p>
+</li>
+</ol>
+<ul>
+<li><p>State （状态）</p>
+<p>状态存储了整个应用的数据，而且是唯一的，这个接口提供的是让组件获取状态数据。vue提供了vuex挂载在根节点的接口store，因此组件获取state的方式如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ./store/index.js  存放vuex中的接口及数据的文件</span></span><br><span class="line"><span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">'vue'</span></span><br><span class="line"><span class="keyword">import</span> Vuex <span class="keyword">from</span> <span class="string">'vuex'</span></span><br><span class="line"></span><br><span class="line">Vue.use(Vuex)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> counter = &#123;</span><br><span class="line">  count : <span class="number">0</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 1. 将store挂载在根节点的vue实例上，因此所有子组件均能访问到vuex中的数据</span></span><br><span class="line"><span class="keyword">import</span> store <span class="keyword">from</span> <span class="string">'./store'</span></span><br><span class="line"><span class="keyword">const</span> app = <span class="keyword">new</span> Vue(&#123;</span><br><span class="line">  el: <span class="string">'#app'</span>,</span><br><span class="line">  <span class="comment">// 把 store 对象提供给 “store” 选项，这可以把 store 的实例注入所有的子组件</span></span><br><span class="line">  store,</span><br><span class="line">  components: &#123; Counter &#125;</span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">// 2. 在组件中获取vuex中的state</span></span><br><span class="line">&lt;template&gt;</span><br><span class="line">   &lt;h1&gt;&#123;&#123;count&#125;&#125;&lt;<span class="regexp">/h1&gt;</span></span><br><span class="line"><span class="regexp">&lt;/</span>template&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">   <span class="keyword">import</span> &#123;mapState&#125; <span class="keyword">from</span> <span class="string">'vuex'</span></span><br><span class="line">   <span class="comment">// 引入vuex /src/helper.js中的辅助函数，将多个状态生成计算属性，供组件获取状态数据state</span></span><br><span class="line">   </span><br><span class="line">     <span class="comment">// 下面有几种写法，其实这不是重点，只是在es6,es7的语法问题</span></span><br><span class="line">     <span class="comment">// 第一种：纯粹的调用$store对象上挂载的vuex接口数据</span></span><br><span class="line">     computed:&#123;</span><br><span class="line">       count()&#123;</span><br><span class="line">         <span class="keyword">return</span> <span class="keyword">this</span>.$store.state.count</span><br><span class="line">       &#125;</span><br><span class="line">     &#125;</span><br><span class="line">    <span class="comment">//第二种：使用vuex提供的mapState辅助函数</span></span><br><span class="line">	computed:mapState(&#123;</span><br><span class="line">      count: <span class="function"><span class="params">state</span> =&gt;</span> state.count,</span><br><span class="line">      <span class="comment">//或者</span></span><br><span class="line">      countAlias: <span class="string">'count'</span>, <span class="comment">// 同箭头函数</span></span><br><span class="line">      </span><br><span class="line">      <span class="comment">// 为了能够使用 `this` 获取局部状态，必须使用常规函数</span></span><br><span class="line">      countLocalState(state)&#123;</span><br><span class="line">        <span class="keyword">return</span> state.count + <span class="keyword">this</span>.localCount</span><br><span class="line">      &#125;</span><br><span class="line">	&#125;)</span><br><span class="line">    <span class="comment">//第三种：计算属性名称与state提供的数据名称相同，直接提供字符串数组即可</span></span><br><span class="line">    computed:mapState([</span><br><span class="line">      <span class="string">'count'</span> <span class="comment">// 这里不但组件模板中可以直接调用count，其它methods中可直接以this.count调用，它实质映射为store.state.count</span></span><br><span class="line">    ])</span><br><span class="line">    <span class="comment">//第四种写法：使用...扩展运算符，mapState返回的是对象，里面有属性方法，...可以取出参数对象中所有可遍历属性，浅拷贝至当前对象中</span></span><br><span class="line">    computed:&#123;</span><br><span class="line">      ...mapState([</span><br><span class="line">        <span class="string">'count'</span></span><br><span class="line">      ])</span><br><span class="line">    &#125;</span><br><span class="line">&lt;<span class="regexp">/script&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Getters （在store中预处理state的方法）</p>
+<p>   如需要对状态事先进行筛选，可以将此操作封装为函数方法，赋予getters，这样做的好处是所有组件共用此函数，不必在每个组件中重复写</p>
+   <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ./store/index.js store 文件中</span></span><br><span class="line"><span class="keyword">const</span> store = <span class="keyword">new</span> Vuex.Store(&#123;</span><br><span class="line">  state: &#123;</span><br><span class="line">    todos: [</span><br><span class="line">      &#123; <span class="attr">id</span>: <span class="number">1</span>, <span class="attr">text</span>: <span class="string">'...'</span>, <span class="attr">done</span>: <span class="literal">true</span> &#125;,</span><br><span class="line">      &#123; <span class="attr">id</span>: <span class="number">2</span>, <span class="attr">text</span>: <span class="string">'...'</span>, <span class="attr">done</span>: <span class="literal">false</span> &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;,</span><br><span class="line">  getters: &#123;</span><br><span class="line">    doneTodos: <span class="function"><span class="params">state</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> state.todos.filter(<span class="function"><span class="params">todo</span> =&gt;</span> todo.done)</span><br><span class="line">      <span class="comment">// [&#123; id: 1, text: '...', done: true &#125;]</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">// 可以接受其他getters方法作为第二参数</span></span><br><span class="line">    doneTodosCount: <span class="function">(<span class="params">state, getters</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> getters.doneTodos.length</span><br><span class="line">      <span class="comment">// 1</span></span><br><span class="line">  	&#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 在组件中使用vuex中的getters</span></span><br><span class="line">&lt;template&gt;</span><br><span class="line">   &lt;h1&gt;&#123;&#123;count&#125;&#125;&lt;<span class="regexp">/h1&gt;</span></span><br><span class="line"><span class="regexp">&lt;/</span>template&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">   <span class="keyword">import</span> &#123;mapGetters&#125; <span class="keyword">from</span> <span class="string">'vuex'</span></span><br><span class="line">   <span class="comment">// 引入vuex /src/helper.js中的辅助函数，将多个状态生成计算属性</span></span><br><span class="line">     <span class="comment">// 第一种：纯粹的调用$store对象上挂载的vuex接口数据</span></span><br><span class="line">     computed:&#123;</span><br><span class="line">       doneTodos () &#123;</span><br><span class="line">    	<span class="keyword">return</span> <span class="keyword">this</span>.$store.getters.doneTodos</span><br><span class="line">  	   &#125;</span><br><span class="line">     &#125;</span><br><span class="line">    <span class="comment">//第二种：计算属性名称与getters提供的数据名称相同，直接提供字符串数组即可 使用...扩展运算符，mapGetters返回的是对象，里面有属性方法，...可以取出参数对象中所有可遍历属性，浅拷贝至当前对象中</span></span><br><span class="line">    computed:&#123;</span><br><span class="line">      ...mapGetters([</span><br><span class="line">        <span class="string">'doneTodos'</span></span><br><span class="line">      ])</span><br><span class="line">    &#125;</span><br><span class="line">	<span class="comment">// 第三种：如果在组件中想用其他属性名替代getters提供的属性名，使用对象形式即可</span></span><br><span class="line">	computed:&#123;</span><br><span class="line">      ...mapGetters(&#123;</span><br><span class="line">        mydoneTodos: <span class="string">'doneTodos'</span></span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&lt;<span class="regexp">/script&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Mutations （更改vuex的store中的state唯一的办法就是提交mutations）</p>
+<p>   每个 mutation 都有一个字符串的 <strong>事件类型 (type)</strong> 和 一个 <strong>回调函数 (handler)</strong>。</p>
+<p>   <strong>mutation 必须是同步函数，分发在组件methods</strong></p>
+   <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//使用常量替代 Mutation 事件类型</span></span><br><span class="line"><span class="comment">// mutation-types.js</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> SOME_MUTATION = <span class="string">'SOME_MUTATION'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// ./store/index.js  文件中</span></span><br><span class="line"><span class="keyword">import</span> Vuex <span class="keyword">from</span> <span class="string">'vuex'</span></span><br><span class="line"><span class="keyword">import</span> &#123; SOME_MUTATION &#125; <span class="keyword">from</span> <span class="string">'./mutation-types'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> store = <span class="keyword">new</span> Vuex.Store(&#123;</span><br><span class="line">  state: &#123;</span><br><span class="line">    count: <span class="number">1</span></span><br><span class="line">  &#125;,</span><br><span class="line">  mutations:&#123;</span><br><span class="line">    increment(state)&#123;</span><br><span class="line">      <span class="comment">// 改变状态</span></span><br><span class="line">      state.count++;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">// 我们可以使用 ES2015 风格的计算属性命名功能来使用一个常量作为函数名</span></span><br><span class="line">    [SOME_MUTATION] (state) &#123;</span><br><span class="line">      <span class="comment">// mutate state</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">//可以向 store.commit 传入额外的参数，即 mutation 的 载荷（payload）</span></span><br><span class="line">  mutations:&#123;</span><br><span class="line">    increment(state,payload)&#123;</span><br><span class="line">      <span class="comment">// 改变状态</span></span><br><span class="line">      state.count += payload.num;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 在组件中使用vuex中的mutations</span></span><br><span class="line">&lt;template&gt;</span><br><span class="line">   &lt;h1&gt;&#123;&#123;count&#125;&#125;&lt;<span class="regexp">/h1&gt;</span></span><br><span class="line"><span class="regexp">&lt;/</span>template&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">   <span class="keyword">import</span> &#123;mapMutations&#125; <span class="keyword">from</span> <span class="string">'vuex'</span></span><br><span class="line">   <span class="comment">// 引入vuex /src/helper.js中的辅助函数，将多个状态生成计算属性</span></span><br><span class="line">     <span class="comment">// 第一种：纯粹的调用$store对象上挂载的vuex接口数据</span></span><br><span class="line">     methods:&#123;</span><br><span class="line">       increment () &#123;</span><br><span class="line">    	<span class="keyword">return</span> <span class="keyword">this</span>.$store.commit(<span class="string">'increment'</span>)</span><br><span class="line">  	   &#125;</span><br><span class="line">     &#125;</span><br><span class="line">    <span class="comment">//第二种：计算属性名称与mutations提供的数据名称相同，直接提供字符串数组即可 使用...扩展运算符，mapMutations返回的是对象，里面有属性方法，...可以取出参数对象中所有可遍历属性，浅拷贝至当前对象中</span></span><br><span class="line">    methods:&#123;</span><br><span class="line">      ...mapMutations([</span><br><span class="line">      <span class="string">'increment'</span> <span class="comment">// 映射 this.increment() 为 this.$store.commit('increment')</span></span><br><span class="line">     ]),</span><br><span class="line">    &#125;</span><br><span class="line">	<span class="comment">// 第三种：如果在组件中想用其他属性名替代mutations提供的属性名，使用对象形式即可</span></span><br><span class="line">	methods:&#123;</span><br><span class="line">      ...mapMutations(&#123;</span><br><span class="line">        myincrement: <span class="string">'increment'</span></span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&lt;<span class="regexp">/script&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Actions （提供异步提交mutations的接口）</p>
+   <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ./store/index.js  文件中</span></span><br><span class="line"><span class="keyword">import</span> Vuex <span class="keyword">from</span> <span class="string">'vuex'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> store = <span class="keyword">new</span> Vuex.Store(&#123;</span><br><span class="line">  state: &#123;</span><br><span class="line">    count: <span class="number">1</span></span><br><span class="line">  &#125;,</span><br><span class="line">  mutations:&#123;</span><br><span class="line">    increment(state)&#123;</span><br><span class="line">      <span class="comment">// 改变状态</span></span><br><span class="line">      state.count++;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  actions:&#123;</span><br><span class="line">    <span class="comment">//Action 函数接受一个与 store 实例具有相同方法和属性的 context 对象，</span></span><br><span class="line">    <span class="comment">//因此你可以调用 context.commit 提交一个 mutation，</span></span><br><span class="line">    <span class="comment">//或者通过 context.state 和 context.getters 来获取 state 和 getters。</span></span><br><span class="line">    increment (context) &#123;</span><br><span class="line">      context.commit(<span class="string">'increment'</span>) <span class="comment">//这里提交的就是mutations</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 或者通过参数结构的语法这样写</span></span><br><span class="line">  actions: &#123;</span><br><span class="line">    increment (&#123; commit &#125;) &#123;</span><br><span class="line">        commit(<span class="string">'increment'</span>)</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">// 异步提交mutations</span></span><br><span class="line">    incrementAsync (&#123; commit &#125;) &#123;</span><br><span class="line">      setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">        commit(<span class="string">'increment'</span>)</span><br><span class="line">      &#125;, <span class="number">1000</span>)</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">// 可以使用promise或者async / await 组合使用actions</span></span><br><span class="line">    actionA (&#123; commit &#125;) &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">        setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">          commit(<span class="string">'someMutation'</span>)</span><br><span class="line">          resolve()</span><br><span class="line">        &#125;, <span class="number">1000</span>)</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;,</span><br><span class="line">    actionB (&#123; dispatch, commit &#125;) &#123;</span><br><span class="line">      <span class="keyword">return</span> dispatch(<span class="string">'actionA'</span>).then(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">        commit(<span class="string">'someOtherMutation'</span>)</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">// 组件中使用actions</span></span><br><span class="line">&lt;template&gt;</span><br><span class="line">   &lt;h1&gt;&#123;&#123;count&#125;&#125;&lt;<span class="regexp">/h1&gt;</span></span><br><span class="line"><span class="regexp">&lt;/</span>template&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">   <span class="keyword">import</span> &#123;mapActions&#125; <span class="keyword">from</span> <span class="string">'vuex'</span></span><br><span class="line">   <span class="comment">// 引入vuex /src/helper.js中的辅助函数，将多个状态生成计算属性</span></span><br><span class="line">     <span class="comment">// 第一种：纯粹的调用$store对象上挂载的vuex接口数据</span></span><br><span class="line">     methods:&#123;</span><br><span class="line">       increment () &#123;</span><br><span class="line">    	<span class="keyword">return</span> <span class="keyword">this</span>.$store.dispatch(<span class="string">'increment'</span>)</span><br><span class="line">  	   &#125;</span><br><span class="line">     &#125;</span><br><span class="line">    <span class="comment">//第二种：计算属性名称与state提供的数据名称相同，直接提供字符串数组即可 使用...扩展运算符，mapActions返回的是对象，里面有属性方法，...可以取出参数对象中所有可遍历属性，浅拷贝至当前对象中</span></span><br><span class="line">    methods:&#123;</span><br><span class="line">      ...mapActions([</span><br><span class="line">      <span class="string">'increment'</span> <span class="comment">// 映射 this.increment() 为 this.$store.dispatch('increment')</span></span><br><span class="line">    ]),</span><br><span class="line">    &#125;</span><br><span class="line">	<span class="comment">// 第三种：如果在组件中想用其他属性名替代actions提供的属性名，使用对象形式即可</span></span><br><span class="line">	methods:&#123;</span><br><span class="line">      ...mapActions(&#123;</span><br><span class="line">        myincrement: <span class="string">'increment'</span></span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&lt;<span class="regexp">/script&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Modules （将store分为不同的模块，更好的管理状态）</p>
+<p>   每一个module中都有各自的state,getters,mutations,actions.</p>
+   <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> moduleA = &#123;</span><br><span class="line">  state: &#123; ... &#125;,</span><br><span class="line">  mutations: &#123; ... &#125;,</span><br><span class="line">  actions: &#123; ... &#125;,</span><br><span class="line">  getters: &#123; ... &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> moduleB = &#123;</span><br><span class="line">  state: &#123; ... &#125;,</span><br><span class="line">  mutations: &#123; ... &#125;,</span><br><span class="line">  actions: &#123; ... &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> store = <span class="keyword">new</span> Vuex.Store(&#123;</span><br><span class="line">  modules: &#123;</span><br><span class="line">    a: moduleA,</span><br><span class="line">    b: moduleB</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>   模块内部的 action、mutation、和 getter 注册在<strong>全局命名空间</strong>——这样保证了多个模块能够响应同一 mutation 或 action。</p>
+<p>   举例解释：即上述的A和B模块中声明的<code>mutations</code>可以被<code>actions.js</code>根（全局）文件中调用</p>
+<p>   ​</p>
+</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="Selvin WeChat Pay"/>
+        <p>WeChat Pay</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="Selvin Alipay"/>
+        <p>Alipay</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/vuex/" rel="tag"># vuex</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/12/04/Mysql/" rel="next" title="Mysql">
+                <i class="fa fa-chevron-left"></i> Mysql
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/03/20/browser-reload/" rel="prev" title="全栈前端热更新，后端服务重启，浏览器自动刷新">
+                全栈前端热更新，后端服务重启，浏览器自动刷新 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/dog.jpg"
+               alt="Selvin" />
+          <p class="site-author-name" itemprop="name">Selvin</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+           
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Selvin11" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.zhihu.com/people/too-zi" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                    
+                      知乎
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#vuex解决了什么"><span class="nav-number">1.</span> <span class="nav-text">vuex解决了什么?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#何时需要用到它？"><span class="nav-number">2.</span> <span class="nav-text">何时需要用到它？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vuex该如何使用？"><span class="nav-number">3.</span> <span class="nav-text">vuex该如何使用？</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Selvin</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://selvin.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://yoursite.com/2017/03/17/vuex-about/';
+          this.page.identifier = '2017/03/17/vuex-about/';
+          this.page.title = 'vuex入门到实践';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://selvin.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("AeHbRlweGHbhdUoLMQavEAAm-gzGzoHsz", "jyTHkEuzSaX6yNy5ku1BQmQv");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
